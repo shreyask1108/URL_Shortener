@@ -1,0 +1,35 @@
+.body{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.container1{
+    margin-top: 24vh;
+}
+input{
+    width: 50vw;
+    height:30px ;
+    display: flex;
+}
+.ui-widget{
+    margin-top: 8vh;
+    display: flex;
+    flex-direction: column;
+}
+table{
+    margin-top: 5vw;
+}
+.autocomp{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.btn{
+    backdrop-filter: blur(5px);
+    background: transparent;
+    color: black;
+    height: fit-content;
+    width: 10vw;
+    border-radius: 0;
+    border-width: 5px;
+    font-size: larger;
+}
+.url{
+    width: 10vw;
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link
+			rel="stylesheet"
+			href="/css/search.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		/>
+
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+		<title>URL Shortner Project</title>
+	</head>
+	<body style="background-image: url('image/background.jpg');" class="body">
+		<nav class="navbar navbar-expand-sm fixed-top navbar-light">
+			<div class="container">
+				<a class="navbar-brand" href="/">Too Long ?</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbar1">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active">
+							<a class="nav-link" href="#">About</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container container1">
+			<h1>URL Shrinker</h1>
+			<div>
+				
+				<div class="ui-widget">
+					<div>
+						<input id="fullurls" class="autocomp form-control" placeholder="Search by Full URL">
+						<br/>
+					</div>
+					<div >
+						<input id="shorturls" class="autocomp form-control" placeholder="Search by Short URL">
+						<br/>
+					</div>
+					<div>
+						<input id="note" class="autocomp form-control" placeholder="Search by Note">
+						<br/>
+					</div>
+					<!-- <ul id="short"></ul> -->
+				</div>
+				<table class="table table-striped table-responsive">
+					<thead>
+						<tr>
+							<th>Full URL</th>
+							<th>Short URL</th>
+							<th>Note</th>
+							<th>Clicks</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr id="table">
+							
+						</tr>
+					</tbody>
+				</table>
+                <script>
+					$(document).ready(function () {
+						$("#shorturls").autocomplete({
+							source: async function(request, response) {
+								let data = await fetch(`http://localhost:3000/search?term=${request.term}`)
+									.then(results => results.json())
+									.then(results => results.map(result => { 
+										return { label: result.short, value: result.short,id: result._id };
+									}));
+								response(data);
+							},
+							minLength: 2,
+							select: function(event, ui) {
+								fetch(`http://localhost:3000/get/${ui.item.id}`)
+									.then(result => result.json())
+									.then(result => {
+										$("#table").empty();
+										$("#table").append(`<td>${result.full}</td>`);
+										$("#table").append(`<td>${result.short}</td>`);
+										$("#table").append(`<td>${result.note}</td>`);
+										$("#table").append(`<td>${result.clicks}</td>`);
+									});
+								
+							}
+						});
+						$("#fullurls").autocomplete({
+							source: async function(request, response) {
+								let data = await fetch(`http://localhost:3000/search?term=${request.term}`)
+									.then(results => results.json())
+									.then(results => results.map(result => { 
+										return { label: result.full, value: result.full,id: result._id };
+									}));
+								response(data);
+							},
+							minLength: 2,
+							select: function(event, ui) {
+								fetch(`http://localhost:3000/get/${ui.item.id}`)
+									.then(result => result.json())
+									.then(result => {
+										$("#table").empty();
+										$("#table").append(`<td>${result.full}</td>`);
+										$("#table").append(`<td>${result.short}</td>`);
+										$("#table").append(`<td>${result.note}</td>`);
+										$("#table").append(`<td>${result.clicks}</td>`);
+									});
+								
+							}
+						});
+						$("#note").autocomplete({
+							source: async function(request, response) {
+								let data = await fetch(`http://localhost:3000/search?term=${request.term}`)
+									.then(results => results.json())
+									.then(results => results.map(result => { 
+										return { label: result.note, value: result.note,id: result._id };
+									}));
+								response(data);
+							},
+							minLength: 2,
+							select: function(event, ui) {
+								fetch(`http://localhost:3000/get/${ui.item.id}`)
+									.then(result => result.json())
+									.then(result => {
+										$("#table").empty();
+										$("#table").append(`<td>${result.full}</td>`);
+										$("#table").append(`<td>${result.short}</td>`);
+										$("#table").append(`<td>${result.note}</td>`);
+										$("#table").append(`<td>${result.clicks}</td>`);
+
+									});
+								
+							}
+						});
+					});
+				</script>
+			</div>
+	</body>
+</html>

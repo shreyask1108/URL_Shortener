@@ -1,0 +1,29 @@
+body{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+
+}
+.container1{
+    /* outline: solid 1px black; */
+    margin-top: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    flex-direction: column;
+}
+
+.btn{
+    backdrop-filter: blur(5px);
+    background: transparent;
+    color: black;
+    height: fit-content;
+    width: 20vw;
+    margin: 10px;
+    border-radius: 0;
+    border-width: 4px;
+    font-size: larger;
+}
+form{
+    display: flex;
+    flex-direction: row;
+}
